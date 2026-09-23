@@ -129,6 +129,7 @@ body:
         - mimir
         - mini-docker
         - misr-quran-radio
+        - nan-usage
         - network-control
         - network-toolkit
         - nextboot-selector
