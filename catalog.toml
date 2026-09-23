@@ -2960,8 +2960,8 @@ tags = ["panel", "shortcut", "theming", "utility", "niri", "hyprland", "sway", "
 [[plugin]]
 id = "borderliner/jalali_calendar"
 name = "Jalali Calendar"
-version = "1.0.0"
-updated_at = 1790164983
+version = "1.0.1"
+updated_at = 1790201144
 added_at = 1790164983
 author = "borderliner"
 license = "MIT"
@@ -2973,8 +2973,8 @@ tags = ["time", "clock", "utility"]
 [[plugin]]
 id = "remo/noctes"
 name = "Noctes"
-version = "0.19.0"
-updated_at = 1790168059
+version = "0.19.1"
+updated_at = 1790201102
 added_at = 1790168059
 author = "remo"
 license = "MIT"
