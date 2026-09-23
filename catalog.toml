@@ -2915,15 +2915,21 @@ tags = ["theming"]
 [[plugin]]
 id = "hy4ri/herdr"
 name = "Herdr"
-version = "1.0.0"
-updated_at = 1790164461
+version = "1.1.0"
+updated_at = 1790200991
 added_at = 1790164461
 author = "Hy4ri"
 license = "MIT"
 icon = "robot"
 description = "Monitor Herdr sessions and coding agents from the Noctalia bar."
-plugin_api = 24
+plugin_api = 26
 tags = ["bar", "panel", "service", "ai", "development", "productivity"]
+
+[[plugin.release]]
+plugin_api = 24
+version = "1.0.0"
+updated_at = 1790164461
+rev = "9ec5a4813f22f04313fae5f1707e5d239b812973"
 
 [[plugin]]
 id = "fel/quill"
