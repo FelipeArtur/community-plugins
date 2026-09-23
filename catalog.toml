@@ -188,8 +188,8 @@ rev = "ef085ecebf96b8d1c6d6dd0ca2cbf8bf910f5151"
 [[plugin]]
 id = "8bury/mini-docker"
 name = "Mini Docker"
-version = "1.0.4"
-updated_at = 1784947118
+version = "1.0.5"
+updated_at = 1790200899
 added_at = 1784160253
 author = "8bury"
 license = "MIT"
