@@ -142,6 +142,7 @@ body:
         - nix-monitor
         - nix-search
         - nix-status
+        - noctaproton-vpn
         - noctes
         - noctwhspr
         - nvim-projects
