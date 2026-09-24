@@ -39,6 +39,24 @@
   "notify": {
     "action_failed": "HerdR action failed"
   },
+  "panel": {
+    "empty": "No HerdR sessions were found.",
+    "machine": "Remote machine",
+    "nothing_saved": "Nothing saved",
+    "session_counts": "{agents} agents · {blocked} need you · {done} done · {working} working",
+    "stale": "Latest session data could not be refreshed: {error}",
+    "summary": "{sessions} running sessions · {agents} agents",
+    "title": "HerdR",
+    "workspace_agents": {
+      "one": "{count} agent",
+      "other": "{count} agents"
+    },
+    "workspace_meta": "{panes} · {agents}",
+    "workspace_panes": {
+      "one": "{count} pane",
+      "other": "{count} panes"
+    }
+  },
   "settings": {
     "color_blocked": {
       "description": "Color used for agents needing action, in the bar badge and the panel.",
@@ -71,24 +89,6 @@
     "show_other_machines": {
       "description": "Also list sessions from the other machines saved in HerdR while the panel is open.",
       "label": "Show other machines"
-    }
-  },
-  "panel": {
-    "empty": "No HerdR sessions were found.",
-    "machine": "Remote machine",
-    "session_counts": "{agents} agents · {blocked} need you · {done} done · {working} working",
-    "stale": "Latest session data could not be refreshed: {error}",
-    "summary": "{sessions} running sessions · {agents} agents",
-    "title": "HerdR",
-    "nothing_saved": "Nothing saved",
-    "workspace_meta": "{panes} · {agents}",
-    "workspace_panes": {
-      "one": "{count} pane",
-      "other": "{count} panes"
-    },
-    "workspace_agents": {
-      "one": "{count} agent",
-      "other": "{count} agents"
     }
   },
   "status": {
