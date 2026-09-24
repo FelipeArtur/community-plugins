@@ -2995,3 +2995,16 @@ icon = "brain"
 description = "Your NaN (nan.builders) quota in the bar: usage per model, time to the reset, and a warning if the burn rate is risky."
 plugin_api = 22
 tags = ["bar", "panel", "ai", "indicator", "utility"]
+
+[[plugin]]
+id = "riversyx/noctaproton-vpn"
+name = "NoctaProton VPN"
+version = "1.0.0"
+updated_at = 1790251619
+added_at = 1790251619
+author = "RiverSyx"
+license = "GPL-3.0"
+icon = "shield-lock"
+description = "Proton VPN controller for Noctalia: Kill Switch, NetShield, Port Forwarding, Split Tunneling, and live traffic."
+plugin_api = 24
+tags = ["bar", "panel", "service", "shortcut", "network", "privacy", "utility"]
