@@ -9,6 +9,8 @@ end
 
 local values, watchers = {}, {}
 local commands, callbacks = {}, {}
+local notifications = {}
+local decodedReport = { entries = {} }
 local now = 5000
 local intervals = {}
 
@@ -31,7 +33,11 @@ local noctalia = {
         callbacks[#callbacks + 1] = callback
         return true
     end,
-    json = { decode = function() return { entries = {} } end },
+    json = { decode = function() return decodedReport end },
+    notify = function(title, message)
+        notifications[#notifications + 1] = { title = title, message = message }
+    end,
+    tr = function(key) return key end,
     string = { trim = function(value) return value end },
 }
 
@@ -54,6 +60,61 @@ assert(intervals[#intervals] == 5 * 60 * 1000, "active refresh should restore th
 callbacks[2]({ timedOut = true, exitCode = 0, stdout = '{"entries":[]}', stderr = "" })
 assert(values.error.code == "timed_out", "a timed-out command must not publish valid-looking stdout")
 
+decodedReport = { entries = { { id = "openai", display_name = "Codex api_key=topsecret123", status = "ready",
+    metrics = { { label = "Session", percent = 10 },
+        { label = "Weekly", percent = 100 } } } } }
+now = 9000
+env.onIpc("refresh")
+callbacks[3]({ exitCode = 0, stdout = "{}", stderr = "" })
+assert(#notifications == 1, "a newly exhausted quota should notify once after the first report")
+assert(not notifications[1].title:find("topsecret123", 1, true),
+       "notifications must use the scrubbed report")
+assert(notifications[1].message == "Weekly · ui.quota_exhausted",
+       "quota notifications should use the available translation")
+
+decodedReport.entries[1].metrics[2].percent = 25
+now = 11000
+env.onIpc("refresh")
+callbacks[4]({ exitCode = 0, stdout = "{}", stderr = "" })
+assert(#notifications == 2, "a restored quota should notify on the next successful read")
+assert(notifications[2].message == "Weekly · 25%",
+       "restored quota notifications should state the new reading")
+
+decodedReport.entries[1].metrics[2].percent = 100
+now = 13000
+env.onIpc("refresh")
+callbacks[5]({ exitCode = 0, stdout = "{}", stderr = "" })
+assert(#notifications == 3 and notifications[3].message == "Weekly · ui.quota_exhausted",
+       "weekly quota should notify when exhausted again")
+
+local metrics = decodedReport.entries[1].metrics
+decodedReport.entries[1].metrics = { metrics[2], metrics[1] }
+decodedReport.entries[1].metrics[1].percent = 25
+now = 15000
+env.onIpc("refresh")
+callbacks[6]({ exitCode = 0, stdout = "{}", stderr = "" })
+assert(#notifications == 4 and notifications[4].message == "Weekly · 25%",
+       "restored quota should match the same window after CLI metric reordering")
+
+decodedReport.entries = { { id = "antigravity", display_name = "Antigravity", status = "ready", metrics = {
+    { label = "Gemini", percent = 100, window_secs = 604800 },
+    { label = "Gemini", percent = 10, window_secs = 18000 },
+} } }
+now = 17000
+env.onIpc("refresh")
+callbacks[7]({ exitCode = 0, stdout = "{}", stderr = "" })
+assert(#notifications == 5 and notifications[5].message == "Gemini · ui.quota_exhausted",
+       "a shared model label should report exhaustion")
+
+local agyMetrics = decodedReport.entries[1].metrics
+decodedReport.entries[1].metrics = { agyMetrics[2], agyMetrics[1] }
+decodedReport.entries[1].metrics[2].percent = 25
+now = 19000
+env.onIpc("refresh")
+callbacks[8]({ exitCode = 0, stdout = "{}", stderr = "" })
+assert(#notifications == 6 and notifications[6].message == "Gemini · 25%",
+       "restoration should match the weekly window even when model labels repeat")
+
 local sharedEnv = setmetatable({ noctalia = noctalia }, { __index = _G })
 local shared = assert(load(read("shared.luau"), "shared", "t", sharedEnv))()
 local incompleteFailure = shared.asFailure({})
@@ -74,6 +135,7 @@ assert(#offered > 10, "the vendor dropdown should have been read from the manife
 for _, id in ipairs(offered) do
     -- "brain" is the fallback, so a provider still on it has no glyph of its own.
     assert(shared.providerGlyph(id) ~= "brain", "missing glyph for " .. id)
+    assert(shared.providerDashboard(id) ~= nil, "missing quota service link for " .. id)
 end
 
 -- A named account is drawn with its provider's glyph, not the fallback.
