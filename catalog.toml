@@ -3008,3 +3008,16 @@ icon = "shield-lock"
 description = "Proton VPN controller for Noctalia: Kill Switch, NetShield, Port Forwarding, Split Tunneling, and live traffic."
 plugin_api = 24
 tags = ["bar", "panel", "service", "shortcut", "network", "privacy", "utility"]
+
+[[plugin]]
+id = "egno/vial_keymap"
+name = "Vial Keymap"
+version = "0.2.0"
+updated_at = 1790252358
+added_at = 1790252358
+author = "egno"
+license = "MIT"
+icon = "keyboard"
+description = "Keymap overlay for Vial split keyboards (Aurora Corne): all layers, mod/layer-taps, combos, from a .vil export."
+plugin_api = 24
+tags = ["panel", "bar", "hardware", "utility", "hyprland"]
