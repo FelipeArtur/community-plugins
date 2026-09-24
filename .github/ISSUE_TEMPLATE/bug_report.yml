@@ -219,6 +219,7 @@ body:
         - umbriel-displays
         - umbriel-monitor-control
         - upbeat
+        - vial_keymap
         - vidi
         - vm-manager
         - voxtype
